@@ -1,0 +1,10 @@
+// cors--- using this we can allow frontend ip to access the backend
+// dotenv --- for using the environmental variables
+// mongoose --- for managing the database connectivity
+// nodemon -- will restart the backend whenever we make any changes in the backend
+// bcrypt -- we can encrypt the users password and store in our data base
+// express -- we can create the Api's
+// jsonwebtoken --  we can enable the user authentication the user can able to login in our website
+
+
+

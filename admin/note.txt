@@ -1,0 +1,3 @@
+axios is for making api calls
+react-router-dom is for making routes
+react-toastify is to display notifications
