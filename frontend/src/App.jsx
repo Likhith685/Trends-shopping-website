@@ -13,10 +13,7 @@ import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 import { ToastContainer } from "react-toastify";
 import PlaceOrder from "./pages/PlaceOrder";
-<<<<<<< HEAD
 import MyProfile from "./pages/Myprofile";
-=======
->>>>>>> 83c596943eaf1f9593a4167ad94b9e5671c84413
 
 const App = () => {
   return (
