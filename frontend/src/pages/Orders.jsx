@@ -7,6 +7,20 @@ const Orders = () => {
   const {backendUrl,token,currency} = useContext(ShopContext);
 
   const [orderData,setorderData] =useState([])
+ const [loadingIndex, setLoadingIndex] = useState(null);
+
+
+ const loadorderData1 = async (index) => {
+  setLoadingIndex(index);
+  try {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log('Order tracking simulated for index:', index);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoadingIndex(null);
+  }
+};
 
   const loadorderData = async () =>{
       try {
@@ -66,13 +80,74 @@ const Orders = () => {
               </div>
             </div>
             <div className="md:w-1/2 flex justify-between ">
-              <div className="flex items-center gap-2">
-                <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
-                <p className="text-sm sm:text-base">{item.status}</p>
-              </div>
-              <button onClick={loadorderData} className="border px-4 py-2 text-sm font-medium rounded-sm">
-                Track Your Order
-              </button>
+             
+<div className="flex flex-col items-start gap-6 relative">
+  {["Order Placed", "Packed", "Shipped", "Out for Delivery", "Delivered"].map((step, i, arr) => {
+    const currentIndex = arr.indexOf(item.status);
+    const isCompleted = i < currentIndex || step === "Order Placed"; // always green
+    const isCurrent = i === currentIndex;
+    const isLast = i === arr.length - 1;
+
+    return (
+      <div key={step} className="flex items-start gap-3 relative">
+        {/* Dot and vertical line */}
+        <div className="flex flex-col items-center">
+          {/* Dot */}
+          <div className={`w-4 h-4 rounded-full z-10
+            ${isCompleted ? "bg-green-500" : isCurrent ? "bg-green-600 animate-pulse" : "bg-gray-300"}`}>
+          </div>
+          {/* Vertical Line */}
+          {!isLast && (
+            <div className={`w-px flex-1 ${
+              i < currentIndex ? "bg-green-500" : "bg-gray-300"
+            }`} style={{ height: '40px' }}></div>
+          )}
+        </div>
+
+        {/* Step label */}
+        <p className="text-sm">{step}</p>
+      </div>
+    );
+  })}
+</div>
+
+
+
+
+               <button
+  onClick={() => loadorderData1(index)}
+  className="text-sm font-medium rounded-sm flex items-center gap-2"
+  disabled={loadingIndex === index}
+>
+  {loadingIndex === index ? (
+    <>
+      <svg
+        className="animate-spin h-4 w-4 text-gray-600"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        ></circle>
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+        ></path>
+      </svg>
+      Loading...
+    </>
+  ) : (
+    'Track Your Order'
+  )}
+</button>
+
             </div>
           </div>
         ))}

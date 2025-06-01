@@ -96,4 +96,35 @@ const adminLogin = async (req, res) => {
   }
 };
 
-export { loginUser, registerUser, adminLogin };
+// route for update user
+const userDetails = async (req,res) =>{
+  // console.log(req.body)
+  try {
+    const user = await userModel.findById(req.user.id).select("-password");
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+}
+
+// route for updating user profile
+const updateUserProfile = async (req, res) => {
+  const { name, email, password } = req.body;
+  try {
+    const user = await userModel.findById(req.user.id);
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedpassword = await bcrypt.hash(password,salt);
+      user.password = hashedpassword;
+     } 
+    await user.save();
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ error: "Update failed" });
+  }
+};
+
+
+export { loginUser, registerUser , adminLogin ,userDetails,updateUserProfile};

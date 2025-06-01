@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 const authUser = async (req, res, next) => {
   // accessing token from req.headers
   const { token } = req.headers;
+  // console.log(req.headers)
+  // console.log(token)
   // If token is not available login is not authorised
   if (!token) {
     return res.json({ success: false, message: "Not Authorised login" });
