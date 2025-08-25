@@ -36,7 +36,7 @@ const Footer = () => {
       <div>
         <hr />
         <p className="font-medium mb-5 text-center text-gray-600 mt-5">
-          Copyright 2024 @ shopify.com - All Rights Reserved
+          Copyright 2025 @ trends.com - All Rights Reserved
         </p>
       </div>
     </div>
